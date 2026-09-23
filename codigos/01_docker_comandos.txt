@@ -1,0 +1,53 @@
+========================================
+COMANDOS DE DOCKER UTILIZADOS
+========================================
+
+1. CLONAR EL REPOSITORIO DE DVWA
+--------------------------------
+git clone https://github.com/digininja/DVWA.git
+cd DVWA
+
+2. VERIFICAR VERSIONES DE DOCKER
+--------------------------------
+docker --version
+docker compose version
+
+3. LEVANTAR LOS CONTENEDORES DE DVWA
+------------------------------------
+docker compose up -d
+
+4. VERIFICAR QUE LOS CONTENEDORES ESTÉN CORRIENDO
+-------------------------------------------------
+docker ps
+
+5. GUARDAR INFORMACIÓN DEL MOTOR DE DOCKER
+-------------------------------------------
+docker info > docker_info.txt
+
+6. DETENER LOS CONTENEDORES (para aplicar cambios)
+--------------------------------------------------
+docker compose down
+
+7. VOLVER A LEVANTAR LOS CONTENEDORES
+--------------------------------------
+docker compose up -d
+
+8. ACCEDER A LA BASE DE DATOS DE DVWA
+--------------------------------------
+docker exec -it dvwa-db-1 mysql -u dvwa -pp@ssw0rd dvwa
+
+9. CONSULTAR USUARIOS DE LA BASE DE DATOS (dentro de MySQL)
+-----------------------------------------------------------
+SELECT user, password FROM users;
+
+10. SALIR DE MYSQL
+------------------
+exit;
+
+========================================
+NOTAS:
+- El archivo compose.yml se modificó para cambiar
+  "127.0.0.1:4280:80" por "0.0.0.0:4280:80" para
+  permitir el acceso desde WSL.
+- Los contenedores se llaman: dvwa-dvwa-1 y dvwa-db-1
+========================================
