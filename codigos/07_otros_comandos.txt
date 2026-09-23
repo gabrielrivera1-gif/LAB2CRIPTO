@@ -1,0 +1,51 @@
+========================================
+OTROS COMANDOS UTILIZADOS
+========================================
+
+1. COMANDOS DE WSL
+-------------------
+wsl --version
+wsl --list --verbose
+wsl -d Ubuntu
+wsl --update
+wsl --shutdown
+exit
+
+2. VERIFICAR PYTHON Y REQUESTS EN WSL
+---------------------------------------
+python3 --version
+python3 -c "import requests; print(requests.__version__)"
+
+3. INSTALAR DEPENDENCIAS EN WSL
+---------------------------------
+sudo apt update
+sudo apt install python3-pip -y
+pip3 install requests
+
+4. CREAR Y EJECUTAR EL SCRIPT DE PYTHON
+-----------------------------------------
+nano /home/gabri/brute_force.py
+python3 /home/gabri/brute_force.py
+
+5. COMANDOS PARA CAMBIAR DE USUARIO EN EL SCRIPT
+--------------------------------------------------
+nano /home/gabri/brute_force.py
+# Cambiar "admin" por "gordonb" en la variable username
+python3 /home/gabri/brute_force.py
+
+6. SOLUCIÓN DE PROBLEMAS CON WSL
+----------------------------------
+# Si WSL da error REGDB_E_CLASSNOTREG:
+wsl --update
+wsl --install -d Ubuntu
+
+# Si Docker no arranca:
+# Abrir Docker Desktop y esperar a que inicie el motor
+
+========================================
+NOTAS:
+- El archivo compose.yml se modificó para exponer
+  el puerto 4280 en 0.0.0.0 en lugar de 127.0.0.1.
+- Se creó un diccionario de contraseñas en WSL
+  porque Ubuntu no incluye diccionarios por defecto.
+========================================
