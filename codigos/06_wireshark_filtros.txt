@@ -1,0 +1,51 @@
+========================================
+FILTROS Y PROCEDIMIENTOS DE WIRESHARK
+========================================
+
+1. INTERFACES DE CAPTURA UTILIZADAS
+-------------------------------------
+- Adapter for loopback traffic capture (para cURL y Burp)
+- vEthernet (WSL (Hyper-V firewall)) (para Hydra)
+
+2. FILTROS DE VISUALIZACIÓN
+-----------------------------
+- http
+- tcp port 4280
+
+3. CAPTURA DEL TRÁFICO DE CURL
+--------------------------------
+1. Seleccionar "Adapter for loopback traffic capture"
+2. Iniciar captura
+3. Ejecutar el comando cURL en PowerShell
+4. Detener captura (botón rojo)
+5. Aplicar filtro "http"
+6. Analizar el paquete GET /vulnerabilities/brute/
+7. Buscar la cabecera "User-Agent: curl/8.21.0"
+
+4. CAPTURA DEL TRÁFICO DE BURP
+--------------------------------
+1. Seleccionar "Adapter for loopback traffic capture"
+2. Iniciar captura
+3. Lanzar ataque desde Burp Intruder
+4. Detener captura después de 3-4 segundos
+5. Aplicar filtro "http"
+6. Analizar el paquete GET /vulnerabilities/brute/
+7. Buscar la cabecera "User-Agent: Mozilla/5.0 ... Chrome/151.0.0.0"
+
+5. CAPTURA DEL TRÁFICO DE HYDRA
+---------------------------------
+1. Seleccionar "vEthernet (WSL (Hyper-V firewall))"
+2. Iniciar captura
+3. Ejecutar Hydra desde Ubuntu (WSL)
+4. Detener captura
+5. Aplicar filtro "http"
+6. Analizar el paquete GET /vulnerabilities/brute/
+7. Buscar la cabecera "User-Agent: Mozilla/5.0 (Hydra)"
+8. Verificar la versión HTTP/1.0
+
+========================================
+DIFERENCIAS OBSERVADAS:
+- cURL: User-Agent curl/8.21.0, HTTP/1.1
+- Burp: User-Agent de Chromium, HTTP/1.1, múltiples cabeceras
+- Hydra: User-Agent Mozilla/5.0 (Hydra), HTTP/1.0
+========================================
