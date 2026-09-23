@@ -1,0 +1,69 @@
+========================================
+PROCESO CON BURP SUITE
+========================================
+
+1. CONFIGURACIÓN INICIAL
+-------------------------
+- Abrir Burp Suite Community Edition
+- Seleccionar "Temporary project"
+- Seleccionar "Use Burp defaults"
+- Hacer clic en "Start Burp"
+
+2. ABRIR EL NAVEGADOR INTEGRADO
+--------------------------------
+- Ir a la pestaña "Proxy"
+- Ir a la sub-pestaña "Intercept"
+- Hacer clic en "Open browser"
+
+3. NAVEGAR A DVWA
+-----------------
+- En el navegador de Burp, ir a:
+  http://localhost:4280
+- Iniciar sesión con: admin / password
+- Ir a "DVWA Security" y poner nivel "Low"
+- Ir a "Brute Force" en el menú izquierdo
+
+4. INTERCEPTAR LA SOLICITUD
+----------------------------
+- Activar "Intercept is on" en Burp
+- En el navegador, enviar un login falso (admin / test)
+- Burp interceptará la solicitud GET
+
+5. ENVIAR A INTRUDER
+--------------------
+- Clic derecho sobre la solicitud interceptada
+- Seleccionar "Send to Intruder" (o Ctrl + I)
+- Hacer clic en "Forward" para dejar pasar la solicitud
+
+6. CONFIGURAR INTRUDER
+-----------------------
+- Ir a la pestaña "Intruder"
+- Limpiar posiciones con "Clear §"
+- Seleccionar solo el valor "test" del campo password
+- Hacer clic en "Add §"
+- Verificar que quede: password=§test§
+
+7. CARGAR EL DICCIONARIO
+-------------------------
+- Ir a la pestaña "Payloads"
+- Payload type: Simple list
+- Hacer clic en "Paste"
+- Pegar la lista de 323 contraseñas
+- Verificar que el Payload count sea 323
+
+8. LANZAR EL ATAQUE
+-------------------
+- Hacer clic en "Start attack"
+- Esperar a que termine
+
+9. ANALIZAR LOS RESULTADOS
+---------------------------
+- Ordenar por la columna "Length"
+- Buscar la fila con longitud diferente (4901 o 4904)
+- Esa es la contraseña correcta
+
+========================================
+RESULTADOS OBTENIDOS:
+- admin / password (Length: 4901)
+- gordonb / abc123 (Length: 4904)
+========================================
