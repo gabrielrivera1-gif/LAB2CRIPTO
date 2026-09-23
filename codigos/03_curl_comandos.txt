@@ -1,0 +1,39 @@
+========================================
+COMANDOS DE CURL UTILIZADOS
+========================================
+
+1. VERIFICAR VERSIÓN DE CURL
+-----------------------------
+curl.exe --version
+
+2. OBTENER EL COMANDO CURL DESDE EL NAVEGADOR
+----------------------------------------------
+- Abrir DevTools (F12) en el navegador
+- Ir a la pestaña "Network"
+- Enviar un login falso en DVWA
+- Clic derecho sobre la solicitud "brute"
+- Seleccionar "Copy" → "Copy as cURL (bash)"
+- Pegar en un editor de texto
+
+3. ACCESO INVÁLIDO CON CURL
+-----------------------------
+curl.exe "http://localhost:4280/vulnerabilities/brute/?username=admin&password=test&Login=Login" -H "Cookie: PHPSESSID=cdb7525132853f92383a9fa19e4430b9; security=low"
+
+4. ACCESO VÁLIDO CON CURL
+---------------------------
+curl.exe "http://localhost:4280/vulnerabilities/brute/?username=admin&password=password&Login=Login" -H "Cookie: PHPSESSID=cdb7525132853f92383a9fa19e4430b9; security=low"
+
+5. VERIFICAR CONECTIVIDAD DESDE WSL
+-------------------------------------
+curl -sL http://172.17.208.1:4280 | head -5
+
+6. VERIFICAR ACCESO VÁLIDO DESDE WSL
+--------------------------------------
+curl -s "http://172.17.208.1:4280/vulnerabilities/brute/?username=gordonb&password=abc123&Login=Login" -H "Cookie: PHPSESSID=cdb7525132853f92383a9fa19e4430b9; security=low" | grep -o "Welcome to the password protected area gordonb"
+
+========================================
+NOTAS:
+- En PowerShell, usar "curl.exe" en lugar de "curl"
+  porque "curl" es un alias de Invoke-WebRequest.
+- Para pegar en PowerShell, usar clic derecho.
+========================================
